@@ -2,6 +2,7 @@ const gameBoardModule = require("../src/gameboard");
 
 beforeEach(() => {
   gameBoardModule.gameBoard.length = 0;
+  gameBoardModule.misses.length = 0;
 });
 
 // Uncommenting this ruins the test for calculateCoords
@@ -133,5 +134,11 @@ describe("receiveAttack", () => {
     gameBoardModule.gameBoard.push("D1");
     const hit = gameBoardModule.receiveAttack("A1");
     expect(hit).toBe(false);
+  });
+
+  test("if receive attack was a miss and keep track of the misses", () => {
+    gameBoardModule.receiveAttack("A1");
+    console.log(gameBoardModule.misses);
+    expect(gameBoardModule.misses).toContain("A1");
   });
 });

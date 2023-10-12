@@ -1,7 +1,7 @@
 const shipModule = require("./ship");
 
 const gameBoard = [];
-
+const misses = [];
 function shipManager() {
   const carrier = shipModule.createShip(5);
   const battleship = shipModule.createShip(4);
@@ -75,6 +75,7 @@ function validPlacement(coordArr) {
 }
 
 function receiveAttack(coords) {
+  misses.push(coords);
   return gameBoard.includes(coords);
 }
 
@@ -87,4 +88,5 @@ module.exports = {
   outOfBounds,
   validPlacement,
   receiveAttack,
+  misses,
 };
