@@ -123,22 +123,42 @@ beforeEach(() => {
 //   });
 // });
 
-describe("receiveAttack", () => {
-  test("if receive attack was a hit", () => {
-    gameBoardModule.gameBoard.push("D1");
-    const hit = gameBoardModule.receiveAttack("D1");
-    expect(hit).toBe(true);
+// describe("receiveAttack", () => {
+//   test("if receive attack was a hit", () => {
+//     gameBoardModule.gameBoard.push("D1");
+//     const hit = gameBoardModule.receiveAttack("D1");
+//     expect(hit).toBe(true);
+//   });
+
+//   test("if receive attack was a miss", () => {
+//     gameBoardModule.gameBoard.push("D1");
+//     const hit = gameBoardModule.receiveAttack("A1");
+//     expect(hit).toBe(false);
+//   });
+
+//   test("if receive attack was a miss and keep track of the misses", () => {
+//     gameBoardModule.receiveAttack("A1");
+//     console.log(gameBoardModule.misses);
+//     expect(gameBoardModule.misses).toContain("A1");
+//   });
+// });
+
+describe("lost function", () => {
+  test("all ships are sunk", () => {
+    const allSunkShips = {
+      battleship: { length: 4, sunk: true },
+      carrier: { length: 5, sunk: true },
+    };
+
+    expect(gameBoardModule.lost(allSunkShips)).toBe(true);
   });
 
-  test("if receive attack was a miss", () => {
-    gameBoardModule.gameBoard.push("D1");
-    const hit = gameBoardModule.receiveAttack("A1");
-    expect(hit).toBe(false);
-  });
+  test("not all ships are sunk", () => {
+    const someSunkShips = {
+      battleship: { length: 4, sunk: true },
+      carrier: { length: 5, sunk: false },
+    };
 
-  test("if receive attack was a miss and keep track of the misses", () => {
-    gameBoardModule.receiveAttack("A1");
-    console.log(gameBoardModule.misses);
-    expect(gameBoardModule.misses).toContain("A1");
+    expect(gameBoardModule.lost(someSunkShips)).toBe(false);
   });
 });

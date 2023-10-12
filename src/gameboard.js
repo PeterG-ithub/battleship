@@ -79,6 +79,16 @@ function receiveAttack(coords) {
   return gameBoard.includes(coords);
 }
 
+function lost(ships) {
+  let deadShips = 0;
+  for (ship in ships) {
+    if (ships[ship].sunk) {
+      deadShips += 1;
+    }
+  }
+  return deadShips === Object.keys(ships).length;
+}
+
 module.exports = {
   shipManager,
   placeShip,
@@ -89,4 +99,5 @@ module.exports = {
   validPlacement,
   receiveAttack,
   misses,
+  lost,
 };
