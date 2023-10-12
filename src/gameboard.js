@@ -50,8 +50,12 @@ function calculateCoords(length, x, y, direction) {
       center -= 1;
     }
   }
-  console.log(coords);
   return coords;
+}
+
+function cellEmpty(coords) {
+  console.log(gameBoard);
+  return !gameBoard.includes(coords);
 }
 
 module.exports = {
@@ -59,4 +63,5 @@ module.exports = {
   placeShip,
   gameBoard,
   calculateCoords,
+  cellEmpty,
 };

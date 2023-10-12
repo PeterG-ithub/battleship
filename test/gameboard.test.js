@@ -73,3 +73,16 @@ describe("Calculate coords when ship in west direction", () => {
     expect(coords).toStrictEqual(["F5", "E5", "D5", "C5", "B5"]);
   });
 });
+
+describe("cellEmpty", () => {
+  gameBoardModule.gameBoard.push("D1");
+  test("if cell is empty", () => {
+    const empty = gameBoardModule.cellEmpty("D1");
+    expect(empty).toBe(false);
+  });
+
+  test("if cell is not empty", () => {
+    const empty = gameBoardModule.cellEmpty("A1");
+    expect(empty).toBe(true);
+  });
+});
