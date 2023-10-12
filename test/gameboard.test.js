@@ -86,3 +86,15 @@ describe("cellEmpty", () => {
     expect(empty).toBe(true);
   });
 });
+
+describe("outOfBounds", () => {
+  test("if coords is out of bounds", () => {
+    const outOfBounds = gameBoardModule.outOfBounds("J11");
+    expect(outOfBounds).toBe(true);
+  });
+
+  test("if coords is not out of bounds", () => {
+    const outOfBounds = gameBoardModule.outOfBounds("A1");
+    expect(outOfBounds).toBe(false);
+  });
+});

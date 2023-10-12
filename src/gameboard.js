@@ -54,8 +54,12 @@ function calculateCoords(length, x, y, direction) {
 }
 
 function cellEmpty(coords) {
-  console.log(gameBoard);
   return !gameBoard.includes(coords);
+}
+
+function outOfBounds(coords) {
+  const regex = /^[A-J]([1-9]|10)$/;
+  return !regex.test(coords);
 }
 
 module.exports = {
@@ -64,4 +68,5 @@ module.exports = {
   gameBoard,
   calculateCoords,
   cellEmpty,
+  outOfBounds,
 };
