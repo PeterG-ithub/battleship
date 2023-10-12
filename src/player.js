@@ -22,8 +22,6 @@ function generateRandomNumber() {
   return Math.ceil(Math.random() * 10);
 }
 
-const gameBoardModule = require("./gameboard");
-
 function randomAttack() {
   let coords = generateRandomLetter() + generateRandomNumber();
   while (gameBoardModule.misses.includes(coords)) {
