@@ -74,6 +74,10 @@ function validPlacement(coordArr) {
   return valid;
 }
 
+function receiveAttack(coords) {
+  return gameBoard.includes(coords);
+}
+
 module.exports = {
   shipManager,
   placeShip,
@@ -82,4 +86,5 @@ module.exports = {
   cellEmpty,
   outOfBounds,
   validPlacement,
+  receiveAttack,
 };

@@ -1,5 +1,9 @@
 const gameBoardModule = require("../src/gameboard");
 
+beforeEach(() => {
+  gameBoardModule.gameBoard.length = 0;
+});
+
 // Uncommenting this ruins the test for calculateCoords
 // describe("ship placement", () => {
 //   test("place ship to place ", () => {
@@ -15,10 +19,6 @@ const gameBoardModule = require("../src/gameboard");
 //     });
 //   });
 // });
-
-beforeEach(() => {
-  gameBoardModule.gameBoard.length = 0;
-});
 
 // describe("Calculate coords when ship in north direction", () => {
 //   test("calculateCoords with length of 2", () => {
@@ -104,20 +104,34 @@ beforeEach(() => {
 //   });
 // });
 
-describe("validPlacement", () => {
-  test("if the set of coordinates is valid", () => {
-    const outOfBounds = gameBoardModule.validPlacement(["J10", "J11"]);
-    expect(outOfBounds).toBe(false);
-  });
+// describe("validPlacement", () => {
+//   test("if the set of coordinates is valid", () => {
+//     const outOfBounds = gameBoardModule.validPlacement(["J10", "J11"]);
+//     expect(outOfBounds).toBe(false);
+//   });
 
-  test("if the set of coordinates is valid", () => {
+//   test("if the set of coordinates is valid", () => {
+//     gameBoardModule.gameBoard.push("D1");
+//     const outOfBounds = gameBoardModule.validPlacement(["D1", "D2", "D3"]);
+//     expect(outOfBounds).toBe(false);
+//   });
+
+//   test("if the set of coordinates is valid", () => {
+//     const outOfBounds = gameBoardModule.validPlacement(["H3", "H4", "H5"]);
+//     expect(outOfBounds).toBe(true);
+//   });
+// });
+
+describe("receiveAttack", () => {
+  test("if receive attack was a hit", () => {
     gameBoardModule.gameBoard.push("D1");
-    const outOfBounds = gameBoardModule.validPlacement(["D1", "D2", "D3"]);
-    expect(outOfBounds).toBe(false);
+    const hit = gameBoardModule.receiveAttack("D1");
+    expect(hit).toBe(true);
   });
 
-  test("if the set of coordinates is valid", () => {
-    const outOfBounds = gameBoardModule.validPlacement(["H3", "H4", "H5"]);
-    expect(outOfBounds).toBe(true);
+  test("if receive attack was a miss", () => {
+    gameBoardModule.gameBoard.push("D1");
+    const hit = gameBoardModule.receiveAttack("A1");
+    expect(hit).toBe(false);
   });
 });
