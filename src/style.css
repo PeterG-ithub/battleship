@@ -16,6 +16,7 @@ body {
 
 .board-container {
   display: flex;
+  flex-flow: wrap;
   gap: 2rem;
   justify-content: center;
   padding: 2rem;
@@ -39,6 +40,8 @@ body {
   border-radius: 1.7rem;
   box-shadow: 10px 10px 30px -5px rgb(0, 0, 0);
   padding: 1em;
+  min-width: 400px;
+  min-height: 400px;
 }
 
 .board {
@@ -53,4 +56,14 @@ body {
   text-align: center;
   font-size: 3rem;
   padding: 1rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.cell {
+  text-align: center;
+  border: 1px solid black;
 }
