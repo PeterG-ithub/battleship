@@ -62,6 +62,18 @@ function outOfBounds(coords) {
   return !regex.test(coords);
 }
 
+function validPlacement(coordArr) {
+  console.log(coordArr);
+  const valid = coordArr.every((coord) => {
+    if (cellEmpty(coord) && !outOfBounds(coord)) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  return valid;
+}
+
 module.exports = {
   shipManager,
   placeShip,
@@ -69,4 +81,5 @@ module.exports = {
   calculateCoords,
   cellEmpty,
   outOfBounds,
+  validPlacement,
 };
