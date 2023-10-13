@@ -20,6 +20,7 @@ element.innerHTML = `
 document.body.appendChild(element);
 
 const board1 = createBoard();
+const board2 = createBoard();
 let state = 0;
 const ships = ["carrier", "battleship", "destroyer", "submarine", "patrolBoat"];
 let shipIndex = 0;
@@ -152,6 +153,7 @@ function addShips(x, y) {
   const ship = board1.ships[`${ships[shipIndex]}`];
   if (ship === undefined) {
     state = 1;
+    startGame();
     return;
   }
   let coordsArr = board1.placeShip(ship, x, y, direction);
@@ -169,6 +171,7 @@ function handleBoardClick(id) {
   }
   if (state === 0) {
     addShips(x, y);
+  } else if (state === 1) {
   }
 }
 
@@ -179,7 +182,12 @@ function initialize() {
   addShipRotateListener();
 }
 
-function gameStart() {}
+function startGame() {
+  console.log("game start");
+  board2.placeShipRandomly();
+  console.log(board2.gameBoard);
+}
+
+startGame();
 
 initialize();
-gameStart();

@@ -12,18 +12,8 @@ function changeTurn() {
   // console.log("After:", turn);
 }
 
-function generateRandomLetter() {
-  const alphabet = "ABCDEFGHIJ";
-
-  return alphabet[Math.floor(Math.random() * alphabet.length)];
-}
-
-function generateRandomNumber() {
-  return Math.ceil(Math.random() * 10);
-}
-
 function randomAttack() {
-  let coords = generateRandomLetter() + generateRandomNumber();
+  let coords = gameBoardModule.generateRandomCoord();
   while (gameBoardModule.misses.includes(coords)) {
     coords = generateRandomLetter() + generateRandomNumber();
     if (!gameBoardModule.misses.includes(coords)) {

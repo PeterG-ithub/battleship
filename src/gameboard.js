@@ -99,6 +99,40 @@ const createBoard = () => {
     return deadShips === Object.keys(ships).length;
   }
 
+  function generateRandomLetter() {
+    const alphabet = "ABCDEFGHIJ";
+
+    return alphabet[Math.floor(Math.random() * alphabet.length)];
+  }
+
+  function generateRandomNumber() {
+    return Math.ceil(Math.random() * 10);
+  }
+
+  function generateRandomCoord() {
+    return generateRandomLetter() + generateRandomNumber();
+  }
+
+  const direction = ["n", "e", "s", "w"];
+
+  function generateRandomDirection() {
+    const randomIndex = Math.floor(Math.random() * direction.length);
+    return direction[randomIndex];
+  }
+
+  function placeShipRandomly() {
+    let coords = generateRandomCoord();
+    let [x, y] = coords.split("");
+    let direction = generateRandomDirection();
+    console.log(coords);
+    for (const ship in ships) {
+      while (placeShip(ships[ship], x, y, direction) === 0) {
+        coords = generateRandomCoord();
+        [x, y] = coords.split("");
+      }
+    }
+  }
+
   return {
     shipManager,
     placeShip,
@@ -111,6 +145,8 @@ const createBoard = () => {
     misses,
     lost,
     ships,
+    placeShipRandomly,
+    generateRandomCoord,
   };
 };
 
