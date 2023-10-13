@@ -26,6 +26,7 @@ let shipIndex = 0;
 const directions = ["n", "e", "s", "w"];
 let directionIndex = 0;
 let direction = directions[directionIndex];
+let currentElementId = null;
 function createGridDisplay() {
   const board1 = document.querySelector(".board1");
   const board2 = document.querySelector(".board2");
@@ -58,6 +59,7 @@ function addBoardClickListener() {
 function addShipHoverListener() {
   const board1 = document.querySelector(".board1");
   board1.addEventListener("mouseover", (element) => {
+    currentElementId = element.target.id;
     addHoverEffect(element.target.id);
   });
   board1.addEventListener("mouseout", (element) => {
@@ -76,26 +78,37 @@ function removeShipHoverListener() {
 }
 
 function addShipRotateListener() {
-  console.log(direction);
+  // console.log(direction);
+  const board1 = document.querySelector(".board1");
+  const children = board1.children;
   document.addEventListener("keydown", (key) => {
     if (key.key === "r") {
+      addHoverEffect(currentElementId);
       directionIndex = (directionIndex + 1) % directions.length;
       direction = directions[directionIndex];
-      console.log(direction);
+      // console.log(direction);
+      for (let i = 0; i < children.length; i++) {
+        if (children[i].classList.contains("hover-in")) {
+          children[i].classList.remove("hover-in");
+        }
+      }
     }
   });
 }
 
 function addHoverEffect(id) {
   let coord = id.split("");
-  console.log(coord);
+  // console.log(coord);
   if (board1.ships[`${ships[shipIndex]}`] == undefined) {
     removeShipHoverListener();
     return;
   }
   let shipLength = board1.ships[`${ships[shipIndex]}`].length;
   if (coord.length != 0) {
-    let [a, x, y] = coord;
+    let [a, x, y, z] = coord;
+    if (z != undefined) {
+      y = y + z;
+    }
     const coords = board1.calculateCoords(shipLength, x, y, direction);
     if (board1.validPlacement(coords)) {
       coords.forEach((coord) => {
@@ -114,7 +127,10 @@ function removeHoverEffect(id) {
   }
   let shipLength = board1.ships[`${ships[shipIndex]}`].length;
   if (coord.length != 0) {
-    let [a, x, y] = coord;
+    let [a, x, y, z] = coord;
+    if (z != undefined) {
+      y = y + z;
+    }
     const coords = board1.calculateCoords(shipLength, x, y, direction);
     if (board1.validPlacement(coords)) {
       coords.forEach((coord) => {
@@ -147,7 +163,10 @@ function addShips(x, y) {
 
 function handleBoardClick(id) {
   let coord = id.split("");
-  let [a, x, y] = coord;
+  let [a, x, y, z] = coord;
+  if (z != undefined) {
+    y = y + z;
+  }
   if (state === 0) {
     addShips(x, y);
   }
