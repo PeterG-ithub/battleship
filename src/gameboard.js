@@ -17,9 +17,14 @@ const createBoard = () => {
 
   function placeShip(ship, x, y, direction = "n") {
     const coords = calculateCoords(ship.length, x, y, direction);
-    coords.forEach((coordinate) => {
-      gameBoard.push(coordinate);
-    });
+    if (validPlacement(coords)) {
+      coords.forEach((coordinate) => {
+        gameBoard.push(coordinate);
+      });
+      console.log(`Placed ${ship}`);
+    } else {
+      console.log("invalid placement");
+    }
   }
 
   function calculateCoords(length, x, y, direction) {
