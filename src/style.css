@@ -76,3 +76,7 @@ body {
 .occupied {
   background-color: rgba(30, 146, 255, 0.356);
 }
+
+.hover-in {
+  background-color: rgba(30, 146, 255, 0.356);
+}

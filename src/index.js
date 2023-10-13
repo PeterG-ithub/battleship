@@ -19,6 +19,10 @@ element.innerHTML = `
 `;
 document.body.appendChild(element);
 
+const board1 = createBoard();
+let state = 0;
+const ships = ["carrier", "battleship", "destroyer", "submarine", "patrolBoat"];
+let shipIndex = 0;
 function createGridDisplay() {
   const board1 = document.querySelector(".board1");
   const board2 = document.querySelector(".board2");
@@ -38,7 +42,7 @@ function createGridDisplay() {
   }
 }
 
-function addBoardListener() {
+function addBoardClickListener() {
   const boards = document.querySelectorAll(".board");
   boards.forEach((board) => {
     board.addEventListener("click", (element) => {
@@ -48,7 +52,59 @@ function addBoardListener() {
   console.log("Added board listener.");
 }
 
-const board1 = createBoard();
+function addShipHoverListener() {
+  const board1 = document.querySelector(".board1");
+  board1.addEventListener("mouseover", (element) => {
+    addHoverEffect(element.target.id);
+  });
+  board1.addEventListener("mouseout", (element) => {
+    removeHoverEffect(element.target.id);
+  });
+}
+
+function removeShipHoverListener() {
+  const board1 = document.querySelector(".board1");
+  board1.removeEventListener("mouseover", (element) => {
+    addHoverEffect(element.target.id);
+  });
+  board1.removeEventListener("mouseout", (element) => {
+    removeHoverEffect(element.target.id);
+  });
+}
+
+function addHoverEffect(id) {
+  let coord = id.split("");
+  if (board1.ships[`${ships[shipIndex]}`] == undefined) {
+    removeShipHoverListener();
+    return;
+  }
+  let shipLength = board1.ships[`${ships[shipIndex]}`].length;
+  let [a, x, y] = coord;
+  const coords = board1.calculateCoords(shipLength, x, y, "n");
+  if (board1.validPlacement(coords)) {
+    coords.forEach((coord) => {
+      const cell = document.getElementById(`P${coord}`);
+      cell.classList.add("hover-in");
+    });
+  }
+}
+
+function removeHoverEffect(id) {
+  let coord = id.split("");
+  if (board1.ships[`${ships[shipIndex]}`] == undefined) {
+    removeShipHoverListener();
+    return;
+  }
+  let shipLength = board1.ships[`${ships[shipIndex]}`].length;
+  let [a, x, y] = coord;
+  const coords = board1.calculateCoords(shipLength, x, y, "n");
+  if (board1.validPlacement(coords)) {
+    coords.forEach((coord) => {
+      const cell = document.getElementById(`P${coord}`);
+      cell.classList.remove("hover-in");
+    });
+  }
+}
 
 function displayShip(coordsArr) {
   coordsArr.forEach((id) => {
@@ -57,26 +113,31 @@ function displayShip(coordsArr) {
   });
 }
 
-let state = 0;
-const ships = ["carrier", "battleship", "destroyer", "submarine", "patrolBoat"];
-let shipIndex = 0;
+function addShips(x, y) {
+  const ship = board1.ships[`${ships[shipIndex]}`];
+  if (ship === undefined) {
+    state = 1;
+    return;
+  }
+  let coordsArr = board1.placeShip(ship, x, y, "n");
+  if (coordsArr != 0) {
+    displayShip(coordsArr);
+    shipIndex += 1;
+  }
+}
 
 function handleBoardClick(id) {
   let coord = id.split("");
   let [a, x, y] = coord;
   if (state === 0) {
-    const ship = board1.ships[`${ships[shipIndex]}`];
-    let coordsArr = board1.placeShip(ship, x, y, "n");
-    if (coordsArr != 0) {
-      displayShip(coordsArr);
-      shipIndex += 1;
-    }
+    addShips(x, y);
   }
 }
 
 function initialize() {
   createGridDisplay();
-  addBoardListener();
+  addBoardClickListener();
+  addShipHoverListener();
 }
 
 function gameStart() {}
