@@ -89,7 +89,7 @@ const createBoard = () => {
     return gameBoard.includes(coords);
   }
 
-  function lost(ships) {
+  function lost() {
     let deadShips = 0;
     for (ship in ships) {
       if (ships[ship].sunk) {
@@ -133,6 +133,17 @@ const createBoard = () => {
     }
   }
 
+  function randomAttack() {
+    let coords = generateRandomCoord();
+    while (misses.includes(coords)) {
+      coords = generateRandomLetter() + generateRandomNumber();
+      if (!misses.includes(coords)) {
+        break;
+      }
+    }
+    misses.push(coords);
+  }
+
   return {
     shipManager,
     placeShip,
@@ -147,6 +158,7 @@ const createBoard = () => {
     ships,
     placeShipRandomly,
     generateRandomCoord,
+    randomAttack,
   };
 };
 
