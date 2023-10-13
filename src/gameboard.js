@@ -8,7 +8,7 @@ const createBoard = () => {
     const battleship = shipModule.createShip(4);
     const destroyer = shipModule.createShip(3);
     const submarine = shipModule.createShip(3);
-    const patrolBoat = shipModule.createShip(3);
+    const patrolBoat = shipModule.createShip(2);
 
     return { carrier, battleship, destroyer, submarine, patrolBoat };
   }
@@ -22,8 +22,10 @@ const createBoard = () => {
         gameBoard.push(coordinate);
       });
       console.log(`Placed ${ship}`);
+      return coords;
     } else {
       console.log("invalid placement");
+      return 0;
     }
   }
 
@@ -71,7 +73,7 @@ const createBoard = () => {
   }
 
   function validPlacement(coordArr) {
-    console.log(coordArr);
+    //console.log(coordArr);
     const valid = coordArr.every((coord) => {
       if (cellEmpty(coord) && !outOfBounds(coord)) {
         return true;

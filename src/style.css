@@ -67,3 +67,12 @@ body {
   text-align: center;
   border: 1px solid black;
 }
+
+.cell:hover {
+  background-color: rgba(107, 107, 107, 0.356);
+  cursor: pointer;
+}
+
+.occupied {
+  background-color: rgba(30, 146, 255, 0.356);
+}

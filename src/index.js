@@ -51,16 +51,27 @@ function addBoardListener() {
 const board1 = createBoard();
 
 function displayShip(coordsArr) {
-  const board1 = document.querySelector(".board1");
-  coordsArr.forEach((id) => {});
+  coordsArr.forEach((id) => {
+    let cell = document.getElementById(`P${id}`);
+    cell.classList.add("occupied");
+  });
 }
+
+let state = 0;
+const ships = ["carrier", "battleship", "destroyer", "submarine", "patrolBoat"];
+let shipIndex = 0;
 
 function handleBoardClick(id) {
   let coord = id.split("");
-  let [x, y] = coord;
-  let coordsArr = board1.placeShip(board1.ships.carrier, x, y, "n");
-  console.log(coordsArr);
-  displayShip(coordsArr);
+  let [a, x, y] = coord;
+  if (state === 0) {
+    const ship = board1.ships[`${ships[shipIndex]}`];
+    let coordsArr = board1.placeShip(ship, x, y, "n");
+    if (coordsArr != 0) {
+      displayShip(coordsArr);
+      shipIndex += 1;
+    }
+  }
 }
 
 function initialize() {
