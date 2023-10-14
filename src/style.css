@@ -80,3 +80,11 @@ body {
 .hover-in {
   background-color: rgba(30, 146, 255, 0.356);
 }
+
+.hit {
+  background-color: greenyellow;
+}
+
+.miss {
+  background-color: red;
+}

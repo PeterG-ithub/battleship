@@ -3,6 +3,7 @@ import "./gameboard";
 import "./player";
 import "./ship";
 import createBoard, { placeShip } from "./gameboard";
+import { changeTurn } from "./player";
 
 const element = document.createElement("div");
 element.innerHTML = `
@@ -28,6 +29,7 @@ const directions = ["n", "e", "s", "w"];
 let directionIndex = 0;
 let direction = directions[directionIndex];
 let currentElementId = null;
+let turn = "player";
 function createGridDisplay() {
   const board1 = document.querySelector(".board1");
   const board2 = document.querySelector(".board2");
@@ -164,14 +166,36 @@ function addShips(x, y) {
 }
 
 function handleBoardClick(id) {
+  const b1 = document.querySelector(".board1");
+  const b2 = document.querySelector(".board2");
   let coord = id.split("");
   let [a, x, y, z] = coord;
   if (z != undefined) {
     y = y + z;
   }
+  const cell = document.getElementById(id);
+  console.log(cell);
   if (state === 0) {
     addShips(x, y);
   } else if (state === 1) {
+    if (turn === "player") {
+      if (board2.receiveAttack(x + y)) {
+        cell.classList.add("hit");
+        console.log("hit");
+      } else {
+        console.log("miss");
+        console.log(board2.misses);
+        cell.classList.add("miss");
+      }
+      turn = changeTurn(turn);
+      if (board1.randomAttack()) {
+        console.log("hit");
+      } else {
+        console.log("miss");
+        console.log(board1.misses);
+      }
+      turn = changeTurn(turn);
+    }
   }
 }
 
@@ -187,7 +211,5 @@ function startGame() {
   board2.placeShipRandomly();
   console.log(board2.gameBoard);
 }
-
-startGame();
 
 initialize();
